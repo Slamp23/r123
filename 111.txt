@@ -1,0 +1,150 @@
+1. Настройка RTR-HQ
+
+hostname rtr-hq.company.prof
+
+Команды для просмотра интерфейсов:
+
+sh ip int
+sh int stat
+
+interface te1/0/2
+ip address 192.168.100.2/30
+description ISP
+exit
+
+Другой интерфейс для вланов
+
+interface te1/0/3.100
+ip firewall disable
+description vlan100
+ip address 10.0.10.1/27
+exit
+
+vlan200:
+interface te1/0/3.200
+ip firewall disable
+description vlan200
+ip address 10.0.10.33/27
+exit
+
+vlan300:
+interface te1/0/3.300
+ip firewall disable
+description vlan300
+ip address 10.0.10.65/27
+exit
+
+Сохранение:
+
+do commit
+do confirm
+
+ip route 0.0.0.0/0 192.168.100.1
+
+2. Настройка SW-HQ
+
+apt-get install openvswitch-switch
+
+add-br ovs1 (ens)
+add-port ovs1(ens) eth0
+
+Посмотреть на текущие настройки виртуального коммутатора можно командой
+ova-vsctl show
+ip a
+
+ovs-vsctl set port ovs trunk=100,200
+ens19 - tag=200
+
+ovs-vsctl set port ovs tag=200
+ens20 - tag=100:
+
+ovs-vsctl set port ovs tag=100
+ens21 - tag=200
+
+ovs-vsctl set port ens21 tag=200
+Включаем инкапсулирование пакетов по 802.1q:
+
+modprobe 8021q
+
+
+Включение инкапсулирование пакетов по 802.1q:
+
+modprobe 8021q
+
+3. SRV-HQ
+
+Создаем пользователя sshuser
+adduser sshuser
+
+passwd sshuser
+
+P@ssw0rd
+
+P@ssw0rd
+
+echo "sshuser ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+usermod -aG wheel sshuser
+
+sudo -i
+
+mkdir /home/sshuser
+
+chown sshuser:sshuser /home/sshuser
+
+cd /home/sshuser
+
+mkdir -p .ssh/
+
+chmod 700 .ssh
+
+touch .ssh/authorized_keys
+
+chmod 600 .ssh/authorized_keys
+
+chown sshuser:sshuser .ssh/authorized_keys
+
+На CLI-HQ
+
+Создаем ключи
+
+ssh-keygen -t rsa -b 2048 -f srv_ssh_key
+
+mkdir .ssh
+
+mv srv_ssh_key* .ssh/
+
+Конфиг для автоматического подключения .ssh/config:
+
+Host srv-hq
+        HostName 10.0.10.2
+        User sshuser
+        IdentityFile .ssh/srv_ssh_key
+        Port 2024
+Host srv-br
+        HostName 10.0.20.2
+        User sshuser
+        IdentityFile .ssh/srv_ssh_key
+        Port 2024
+
+chmod 600 .ssh/config
+
+Копирование ключа на удаленный сервер:
+
+ssh-copy-id -i .ssh/srv_ssh_key.pub sshuser@10.0.10.2
+
+ssh-copy-id -i .ssh/srv_ssh_key.pub sshuser@10.0.20.2
+
+На сервере(SRV-HQ) /etc/ssh/sshd_config:
+AllowUsers sshuser
+PermitRootLogin no
+PubkeyAuthentication yes
+PasswordAuthentication no
+AuthorizedKeysFile .ssh/authorized_keys
+Port 2024
+systemctl restart sshd
+
+Подключение:
+ssh srv-hq
+
+
