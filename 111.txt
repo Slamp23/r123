@@ -38,12 +38,6 @@ description vlan200
 ip address 10.0.10.33/27
 exit
 
-vlan300:
-interface te1/0/3.300
-ip firewall disable
-description vlan300
-ip address 10.0.10.65/27
-exit
 
 Сохранение:
 
