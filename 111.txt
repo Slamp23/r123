@@ -5,6 +5,9 @@ https://github.com/abdurrah1m/Professionals_2024
 DNS
 каб-220.рф/ru/МДК-02-01/DNS_ALT-Linux
 
+Задание 10 
+ altlinux.org/FreeIPA/Установка_сервера_FreeIPA (Установка сервера FreeIPA в режиме CA-)
+
 
 1. Настройка RTR-HQ
 
