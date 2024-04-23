@@ -1,5 +1,8 @@
 https://github.com/abdurrah1m/Professionals_2024
 
+Подклюяение доп диска(задание 3)
+ hostland.ru/ru/services/kvm/add_new_disk
+
 
 
 1. Настройка RTR-HQ
