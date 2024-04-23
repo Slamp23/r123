@@ -2,7 +2,8 @@ https://github.com/abdurrah1m/Professionals_2024
 
 Подклюяение доп диска(задание 3)
  hostland.ru/ru/services/kvm/add_new_disk
-
+DNS
+каб-220.рф/ru/МДК-02-01/DNS_ALT-Linux
 
 
 1. Настройка RTR-HQ
