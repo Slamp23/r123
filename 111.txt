@@ -5,6 +5,9 @@ https://github.com/abdurrah1m/Professionals_2024
 DNS
 каб-220.рф/ru/МДК-02-01/DNS_ALT-Linux
 
+
+https://yandex.ru/turbo/serveradmin.ru/s/nastroyka-seti-v-debian/?lite=1
+
 Задание 10 
  altlinux.org/FreeIPA/Установка_сервера_FreeIPA (Установка сервера FreeIPA в режиме CA-)
 
